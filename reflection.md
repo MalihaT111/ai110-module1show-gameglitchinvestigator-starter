@@ -9,12 +9,12 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
   (for example: "the secret number kept changing" or "the hints were backwards").
 
 ---
+When I first ran the program, I entered 50 while the secret number was 79, but with hints enabled it incorrectly told me to go lower instead of higher. When I submitted a larger number afterward, the hint again gave the opposite direction. The Submit button also does not automatically add guesses to the history. Additionally, the guess history persists between games, and clicking New Game does not properly reset the game state. 
 
 ## 2. How did you use AI as a teammate?
 
 - Which AI tools did you use on this project (for example: ChatGPT, Gemini, Copilot)?
-- Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
-- Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
+I used ChatGPT to organize my responses to the reflection.md. For Coding, I used Claude. The AI suggested that the session state is not updated properly and I verified it by going to those lines of code. It tried to find other bugs I wasn't trying to fix and that was something I did not want. 
 
 ---
 
