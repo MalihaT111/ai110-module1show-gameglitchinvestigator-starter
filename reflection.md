@@ -20,5 +20,5 @@ I didn't realize this was a question but I initially inspected the code, and the
 In the original app, the secret number appeared to change because Streamlit reruns the entire script every time the user interacts with the page. This meant parts of the game logic were re-executed, which caused inconsistent behavior during guesses. Streamlit reruns work by restarting the script from the top, while st.session_state stores values that should persist between those reruns. The fix was storing the secret number in st.session_state and only generating it once (or when starting a new game), which keeps the number stable throughout the game.
 
 ## 5. Looking ahead: your developer habits
-I want to make use of test cases more often. Instead of relying on UI changes, I want to rely on pytests. I feel like I have the tendency to copy paste code without looking, so I will do that more from now on. 
+I want to make use of test cases more often. Instead of relying on UI changes, I want to rely on pytests. I feel like I have the tendency to copy paste code without looking, so I will do that more from now on. I think AI generated code often introduces new bugs and I need to be careful to not make problems worse. 
 
