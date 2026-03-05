@@ -103,19 +103,35 @@ if "status" not in st.session_state:
 if "history" not in st.session_state:
     st.session_state.history = []
 
+
+def start_new_game():
+    st.session_state.attempts = 0
+    st.session_state.secret = random.randint(low, high)
+    st.session_state.status = "playing"
+    st.session_state.history = []
+    st.session_state.score = 0
+
+
+def render_info_and_debug(attempt_limit, difficulty):
+    info_placeholder.info(
+        f"Guess a number between 1 and 100. "
+        f"Attempts left: {attempt_limit - st.session_state.attempts}"
+    )
+
+    with debug_placeholder.container():
+        with st.expander("Developer Debug Info"):
+            st.write("Secret:", st.session_state.secret)
+            st.write("Attempts:", st.session_state.attempts)
+            st.write("Score:", st.session_state.score)
+            st.write("Difficulty:", difficulty)
+            st.write("History:", st.session_state.history)
+
+
 st.subheader("Make a guess")
 
-st.info(
-    f"Guess a number between 1 and 100. "
-    f"Attempts left: {attempt_limit - st.session_state.attempts}"
-)
-
-with st.expander("Developer Debug Info"):
-    st.write("Secret:", st.session_state.secret)
-    st.write("Attempts:", st.session_state.attempts)
-    st.write("Score:", st.session_state.score)
-    st.write("Difficulty:", difficulty)
-    st.write("History:", st.session_state.history)
+info_placeholder = st.empty()
+debug_placeholder = st.empty()
+render_info_and_debug(attempt_limit, difficulty)
 
 raw_guess = st.text_input(
     "Enter your guess:",
@@ -126,17 +142,9 @@ col1, col2, col3 = st.columns(3)
 with col1:
     submit = st.button("Submit Guess 🚀")
 with col2:
-    new_game = st.button("New Game 🔁")
+    st.button("New Game 🔁", on_click=start_new_game)
 with col3:
     show_hint = st.checkbox("Show hint", value=True)
-
-if new_game:
-    st.session_state.attempts = 0
-    st.session_state.secret = random.randint(low, high)
-    st.session_state.status = "playing"
-    st.session_state.history = []
-    st.session_state.score = 0
-    st.success("New game started.")
 
 # fix me 
 if submit:
@@ -145,6 +153,7 @@ if submit:
             st.success("You already won. Start a new game to play again.")
         else:
             st.error("Game over. Start a new game to try again.")
+        render_info_and_debug(attempt_limit, difficulty)
         st.stop()
     
     st.session_state.attempts += 1
@@ -180,6 +189,7 @@ if submit:
                 f"You won! The secret was {st.session_state.secret}. "
                 f"Final score: {st.session_state.score}"
             )
+            render_info_and_debug(attempt_limit, difficulty)
             st.stop()
         else:
             if st.session_state.attempts >= attempt_limit:
@@ -189,7 +199,10 @@ if submit:
                     f"The secret was {st.session_state.secret}. "
                     f"Score: {st.session_state.score}"
                 )
+                render_info_and_debug(attempt_limit, difficulty)
                 st.stop()
+
+render_info_and_debug(attempt_limit, difficulty)
 
 if st.session_state.status != "playing":
     if st.session_state.status == "won":
